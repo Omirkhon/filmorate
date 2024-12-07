@@ -1,5 +1,6 @@
 package com.practice.filmorate.controller;
 
+import com.practice.filmorate.exceptions.NotFoundException;
 import com.practice.filmorate.exceptions.ValidationException;
 import com.practice.filmorate.model.User;
 import jakarta.validation.Valid;
@@ -17,20 +18,26 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
     private final Map<Integer, User> users = new HashMap<>();
+    private int uniqueId = 1;
 
     @PostMapping
     public User createUser(@Valid @RequestBody User user) {
         validate(user);
-        if (user.getName().isEmpty() || user.getName().isBlank())
+        if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
+        }
+        user.setId(uniqueId++);
         users.put(user.getId(), user);
         log.debug("Пользователь добавлен");
         return user;
     }
 
     @PutMapping
-    public User update(User user) {
+    public User update(@Valid @RequestBody User user) {
         validate(user);
+        if (!users.containsKey(user.getId())) {
+            throw new NotFoundException();
+        }
         users.put(user.getId(), user);
         log.debug("Пользователь обновлен");
         return user;
@@ -43,15 +50,8 @@ public class UserController {
     }
 
     public void validate(@Valid @RequestBody User user) {
-        if (user.getEmail() == null || user.getEmail().isBlank())
-            throw new ValidationException("Эл. почта не может быть пустой.");
-        else if (!user.getEmail().contains("@"))
-            throw new ValidationException("Эл. почта должна содержать знак @.");
-        else if (user.getLogin().isEmpty() || user.getLogin().isBlank())
-            throw new ValidationException("Логин не может быть пустым.");
-        else if (user.getLogin().contains(" "))
+        if (user.getLogin().contains(" ")) {
             throw new ValidationException("Логин не может содержать пробелы.");
-        else if (user.getBirthday().isAfter(LocalDate.now()))
-            throw new ValidationException("Дата рождения не может быть в будущем.");
+        }
     }
 }

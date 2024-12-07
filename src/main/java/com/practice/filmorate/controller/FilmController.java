@@ -1,5 +1,6 @@
 package com.practice.filmorate.controller;
 
+import com.practice.filmorate.exceptions.NotFoundException;
 import com.practice.filmorate.exceptions.ValidationException;
 import com.practice.filmorate.model.Film;
 import jakarta.validation.Valid;
@@ -17,18 +18,23 @@ import java.util.Map;
 @RequestMapping("/films")
 public class FilmController {
     private final Map<Integer, Film> films = new HashMap<>();
+    private int uniqueId = 1;
 
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
         validate(film);
+        film.setId(uniqueId++);
         films.put(film.getId(), film);
         log.debug("Фильм добавлен");
         return film;
     }
 
     @PutMapping
-    public Film update(Film film) {
+    public Film update(@Valid @RequestBody Film film) {
         validate(film);
+        if (!films.containsKey(film.getId())) {
+            throw new NotFoundException();
+        }
         films.put(film.getId(), film);
         log.debug("Фильм обновлен");
         return film;
@@ -41,13 +47,8 @@ public class FilmController {
     }
 
     public void validate(@Valid @RequestBody Film film) {
-        if (film.getName() == null || film.getName().isBlank())
-            throw new ValidationException("Название не может быть пустым.");
-        else if (film.getDescription().length() > 200)
-            throw new ValidationException("Слишком длинное описание.");
-        else if (film.getReleaseDate().isBefore(LocalDate.parse("1895-12-28")))
+        if (film.getReleaseDate().isBefore(LocalDate.parse("1895-12-28"))) {
             throw new ValidationException("Некорректная дата релиза.");
-        else if (film.getDuration().isNegative())
-            throw new ValidationException("Некорректная продолжительность фильма.");
+        }
     }
 }
