@@ -1,6 +1,7 @@
 package com.practice.filmorate;
 
 import com.practice.filmorate.controller.UserController;
+import com.practice.filmorate.exceptions.ValidationException;
 import com.practice.filmorate.model.Film;
 import com.practice.filmorate.model.User;
 import jakarta.validation.Validation;
@@ -49,7 +50,7 @@ public class UserControllerTest {
         User user = new User("aaaa@gmail.com", "a a a", "aaa", LocalDate.of(2018, 1, 1));
 
         String expected = "Логин не может содержать пробелы.";
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> userController.createUser(user));
+        ValidationException exception = assertThrows(ValidationException.class, () -> userController.createUser(user));
 
         assertEquals(expected, exception.getMessage());
     }

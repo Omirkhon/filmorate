@@ -1,6 +1,7 @@
 package com.practice.filmorate;
 
 import com.practice.filmorate.controller.FilmController;
+import com.practice.filmorate.exceptions.ValidationException;
 import com.practice.filmorate.model.Film;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -48,7 +49,7 @@ public class FilmControllerTest {
         Film film = new Film("АА", "Описание", LocalDate.of(1895, 1, 1), 2);
 
         String expected = "Некорректная дата релиза.";
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> filmController.addFilm(film));
+        ValidationException exception = assertThrows(ValidationException.class, () -> filmController.addFilm(film));
 
         assertEquals(expected, exception.getMessage());
     }
