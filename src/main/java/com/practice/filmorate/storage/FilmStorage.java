@@ -1,0 +1,23 @@
+package com.practice.filmorate.storage;
+
+import com.practice.filmorate.model.Film;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+public interface FilmStorage {
+    Map<Integer, Film> films = new HashMap<>();
+    List<Film> findAll();
+
+    Optional<Film> findById(int id);
+
+    Film create(Film film);
+
+    Film update(Film film);
+
+    Film remove(int id);
+
+    Map<Integer, Film> getFilms();
+}

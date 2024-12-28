@@ -1,57 +1,63 @@
 package com.practice.filmorate.controller;
 
-import com.practice.filmorate.exceptions.NotFoundException;
-import com.practice.filmorate.exceptions.ValidationException;
 import com.practice.filmorate.model.User;
+import com.practice.filmorate.service.UserService;
+import com.practice.filmorate.storage.UserStorage;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final Map<Integer, User> users = new HashMap<>();
-    private int uniqueId = 1;
+    UserStorage userStorage;
+    UserService userService;
+
+    public UserController(UserStorage userStorage, UserService userService) {
+        this.userStorage = userStorage;
+        this.userService = userService;
+    }
 
     @PostMapping
     public User createUser(@Valid @RequestBody User user) {
-        validate(user);
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-        user.setId(uniqueId++);
-        users.put(user.getId(), user);
-        log.debug("Пользователь добавлен");
-        return user;
+        return userStorage.create(user);
+    }
+
+    @PutMapping("/{id}/friends/{friendId}")
+    public void addFriend(@Valid @RequestBody @PathVariable int id, @PathVariable int friendId) {
+        userService.addFriend(id, friendId);
+    }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public void deleteFriend(@Valid @RequestBody @PathVariable int id, @PathVariable int friendId) {
+        userService.deleteFriend(id, friendId);
+    }
+
+    @GetMapping("/{id}/friends")
+    public List<User> findAllFriends(@Valid @RequestBody @PathVariable int id) {
+        return userService.findAllFriends(id);
+    }
+
+    @GetMapping("/{id}/friends/common/{otherId}")
+    public List<User> findAllCommonFriends(@Valid @RequestBody @PathVariable int id, @PathVariable int otherId) {
+        return userService.findAllCommonFriends(id, otherId);
     }
 
     @PutMapping
     public User update(@Valid @RequestBody User user) {
-        validate(user);
-        if (!users.containsKey(user.getId())) {
-            throw new NotFoundException();
-        }
-        users.put(user.getId(), user);
-        log.debug("Пользователь обновлен");
-        return user;
+        return userStorage.update(user);
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        log.debug("Получение списка пользователей");
-        return new ArrayList<>(users.values());
+        return userStorage.findAll();
     }
 
-    public void validate(@Valid @RequestBody User user) {
-        if (user.getLogin().contains(" ")) {
-            throw new ValidationException("Логин не может содержать пробелы.");
-        }
+    @DeleteMapping
+    public User delete(@Valid @RequestBody int id) {
+        return userStorage.remove(id);
     }
 }

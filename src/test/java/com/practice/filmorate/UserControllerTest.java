@@ -4,6 +4,8 @@ import com.practice.filmorate.controller.UserController;
 import com.practice.filmorate.exceptions.ValidationException;
 import com.practice.filmorate.model.Film;
 import com.practice.filmorate.model.User;
+import com.practice.filmorate.service.UserService;
+import com.practice.filmorate.storage.InMemoryUserStorage;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.Test;
@@ -14,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserControllerTest {
-    UserController userController = new UserController();
+    UserController userController = new UserController(new InMemoryUserStorage(), new UserService());
     protected static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     protected String validateAndGetFirstMessageTemplate(User user) {

@@ -1,54 +1,58 @@
 package com.practice.filmorate.controller;
 
-import com.practice.filmorate.exceptions.NotFoundException;
-import com.practice.filmorate.exceptions.ValidationException;
 import com.practice.filmorate.model.Film;
+import com.practice.filmorate.service.FilmService;
+import com.practice.filmorate.storage.FilmStorage;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
 @RequestMapping("/films")
 public class FilmController {
-    private final Map<Integer, Film> films = new HashMap<>();
-    private int uniqueId = 1;
+    FilmStorage filmStorage;
+    FilmService filmService;
+
+    public FilmController(FilmStorage filmStorage, FilmService filmService) {
+        this.filmStorage = filmStorage;
+        this.filmService = filmService;
+    }
 
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
-        validate(film);
-        film.setId(uniqueId++);
-        films.put(film.getId(), film);
-        log.debug("Фильм добавлен");
-        return film;
+        return filmStorage.create(film);
     }
 
     @PutMapping
     public Film update(@Valid @RequestBody Film film) {
-        validate(film);
-        if (!films.containsKey(film.getId())) {
-            throw new NotFoundException();
-        }
-        films.put(film.getId(), film);
-        log.debug("Фильм обновлен");
-        return film;
+        return filmStorage.update(film);
+    }
+
+    @PutMapping("/{id}/like/{userId}")
+    public void addLike(@Valid @RequestBody @PathVariable int id, @PathVariable int userId) {
+        filmService.addLike(id, userId);
+    }
+
+    @DeleteMapping("/{id}/like/{userId}")
+    public void deleteLike(@Valid @RequestBody @PathVariable int id, @PathVariable int userId) {
+        filmService.deleteLike(id, userId);
+    }
+
+    @GetMapping("/popular?count={count}")
+    public List<Film> findAllPopular(@Valid @RequestBody @PathVariable int count) {
+        return filmService.findAllPopular(count);
     }
 
     @GetMapping
     public List<Film> getAllFilms() {
-        log.debug("Получение списка фильмов");
-        return new ArrayList<>(films.values());
+        return filmStorage.findAll();
     }
 
-    public void validate(@Valid @RequestBody Film film) {
-        if (film.getReleaseDate().isBefore(LocalDate.parse("1895-12-28"))) {
-            throw new ValidationException("Некорректная дата релиза.");
-        }
+    @DeleteMapping
+    public Film delete(@Valid @RequestBody int id) {
+        return filmStorage.remove(id);
     }
 }
