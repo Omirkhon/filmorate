@@ -13,6 +13,7 @@ import java.util.*;
 @Slf4j
 @Component
 public class InMemoryUserStorage implements UserStorage {
+    Map<Integer, User> users = new HashMap<>();
     private int uniqueId = 1;
 
     @Override
@@ -32,10 +33,6 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User create(User user) {
-        validate(user);
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
         user.setId(uniqueId++);
         users.put(user.getId(), user);
         log.debug("Пользователь добавлен");
@@ -44,27 +41,8 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User update(User user) {
-        validate(user);
-        if (!users.containsKey(user.getId())) {
-            throw new NotFoundException("Пользователь не найден");
-        }
         users.put(user.getId(), user);
         log.debug("Пользователь обновлен");
         return user;
-    }
-
-    @Override
-    public User remove(int id) {
-        if (!users.containsKey(id)) {
-            throw new NotFoundException("Пользователь не найден");
-        }
-        log.debug("Удаление пользователя");
-        return users.remove(id);
-    }
-
-    public void validate(@Valid @RequestBody User user) {
-        if (user.getLogin().contains(" ")) {
-            throw new ValidationException("Логин не может содержать пробелы.");
-        }
     }
 }

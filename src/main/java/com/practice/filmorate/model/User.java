@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -26,7 +27,8 @@ public class User {
     String name;
     @PastOrPresent (message = "Дата рождения не может быть в будущем.")
     LocalDate birthday;
-    Set<Integer> friends;
+
+    final Set<Integer> friends = new HashSet<>();
 
     public User(String email, String login, String name, LocalDate birthday) {
         this.email = email;
@@ -40,9 +42,6 @@ public class User {
     }
 
     public void deleteFriend(int friend) {
-        if (!friends.contains(friend)) {
-            throw new NotFoundException("Пользователь не найден");
-        }
         this.friends.remove(friend);
     }
 }

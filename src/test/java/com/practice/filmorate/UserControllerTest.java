@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserControllerTest {
-    UserController userController = new UserController(new InMemoryUserStorage(), new UserService());
+    UserController userController = new UserController(new UserService(new InMemoryUserStorage()));
     protected static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     protected String validateAndGetFirstMessageTemplate(User user) {

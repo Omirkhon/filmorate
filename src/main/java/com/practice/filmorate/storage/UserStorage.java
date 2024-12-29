@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface UserStorage {
-    Map<Integer, User> users = new HashMap<>();
     List<User> findAll();
 
     Optional<User> findById(int id);
@@ -16,6 +15,4 @@ public interface UserStorage {
     User create(User user);
 
     User update(User user);
-
-    User remove(int id);
 }

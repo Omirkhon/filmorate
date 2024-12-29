@@ -14,6 +14,7 @@ import java.util.*;
 @Slf4j
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
+    Map<Integer, Film> films = new HashMap<>();
     private int uniqueId = 1;
 
     @Override
@@ -33,7 +34,6 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film create(Film film) {
-        validate(film);
         film.setId(uniqueId++);
         films.put(film.getId(), film);
         log.debug("Фильм добавлен");
@@ -42,10 +42,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film update(Film film) {
-        validate(film);
-        if (!films.containsKey(film.getId())) {
-            throw new NotFoundException("Пользователь не найден");
-        }
+
         films.put(film.getId(), film);
         log.debug("Фильм обновлен");
         return film;
@@ -63,11 +60,5 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public Map<Integer, Film> getFilms() {
         return films;
-    }
-
-    public void validate(@Valid @RequestBody Film film) {
-        if (film.getReleaseDate().isBefore(LocalDate.parse("1895-12-28"))) {
-            throw new ValidationException("Некорректная дата релиза.");
-        }
     }
 }

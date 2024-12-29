@@ -5,6 +5,7 @@ import com.practice.filmorate.exceptions.ValidationException;
 import com.practice.filmorate.model.Film;
 import com.practice.filmorate.service.FilmService;
 import com.practice.filmorate.storage.InMemoryFilmStorage;
+import com.practice.filmorate.storage.InMemoryUserStorage;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FilmControllerTest {
-    FilmController filmController = new FilmController(new InMemoryFilmStorage(), new FilmService());
+    FilmController filmController = new FilmController(new FilmService(new InMemoryFilmStorage(), new InMemoryUserStorage()));
     protected static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     protected String validateAndGetFirstMessageTemplate(Film film) {

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface FilmStorage {
-    Map<Integer, Film> films = new HashMap<>();
+
     List<Film> findAll();
 
     Optional<Film> findById(int id);

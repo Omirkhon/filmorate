@@ -4,6 +4,7 @@ import com.practice.filmorate.model.User;
 import com.practice.filmorate.service.UserService;
 import com.practice.filmorate.storage.UserStorage;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,18 +13,13 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
-    UserStorage userStorage;
-    UserService userService;
-
-    public UserController(UserStorage userStorage, UserService userService) {
-        this.userStorage = userStorage;
-        this.userService = userService;
-    }
+    private final UserService userService;
 
     @PostMapping
     public User createUser(@Valid @RequestBody User user) {
-        return userStorage.create(user);
+        return userService.create(user);
     }
 
     @PutMapping("/{id}/friends/{friendId}")
@@ -48,16 +44,11 @@ public class UserController {
 
     @PutMapping
     public User update(@Valid @RequestBody User user) {
-        return userStorage.update(user);
+        return userService.update(user);
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        return userStorage.findAll();
-    }
-
-    @DeleteMapping
-    public User delete(@Valid @RequestBody int id) {
-        return userStorage.remove(id);
+        return userService.findAll();
     }
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -24,7 +25,7 @@ public class Film {
     LocalDate releaseDate;
     @Positive(message = "Некорректная продолжительность фильма.")
     int duration;
-    Set<Integer> likes;
+    final Set<Integer> likes = new HashSet<>();
     public Film(String name, String description, LocalDate releaseDate, int duration) {
         this.name = name;
         this.description = description;
