@@ -17,7 +17,5 @@ public interface FilmStorage {
 
     Film update(Film film);
 
-    Film remove(int id);
-
-    Map<Integer, Film> getFilms();
+    void remove(int id);
 }

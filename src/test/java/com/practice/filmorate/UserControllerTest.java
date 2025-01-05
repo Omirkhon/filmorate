@@ -2,10 +2,8 @@ package com.practice.filmorate;
 
 import com.practice.filmorate.controller.UserController;
 import com.practice.filmorate.exceptions.ValidationException;
-import com.practice.filmorate.model.Film;
 import com.practice.filmorate.model.User;
 import com.practice.filmorate.service.UserService;
-import com.practice.filmorate.storage.InMemoryUserStorage;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.Test;

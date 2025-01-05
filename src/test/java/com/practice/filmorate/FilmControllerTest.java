@@ -4,8 +4,6 @@ import com.practice.filmorate.controller.FilmController;
 import com.practice.filmorate.exceptions.ValidationException;
 import com.practice.filmorate.model.Film;
 import com.practice.filmorate.service.FilmService;
-import com.practice.filmorate.storage.InMemoryFilmStorage;
-import com.practice.filmorate.storage.InMemoryUserStorage;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.Test;
