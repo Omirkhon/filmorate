@@ -4,19 +4,18 @@ import com.practice.filmorate.exceptions.NotFoundException;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Film {
     int id;
@@ -29,7 +28,7 @@ public class Film {
     int duration;
     Mpa mpa;
 
-    final Set<Genre> genres = new HashSet<>();
+    final Set<Genre> genres = new TreeSet<>();
     final Set<Integer> likes = new HashSet<>();
 
     public void addLike(int userId) {
@@ -41,6 +40,10 @@ public class Film {
             throw new NotFoundException("Пользователь не найден");
         }
         this.likes.remove(userId);
+    }
+
+    public void addGenre(Genre genre) {
+        this.genres.add(genre);
     }
 
     public Integer getNumOfLikes() {

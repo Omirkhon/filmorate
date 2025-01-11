@@ -250,3 +250,369 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:840)
+2025-01-11 12:46:34.052348+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 12:46:34.274692+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 12:50:35.543682+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 12:50:35.758705+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 13:00:36.497658+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 13:00:36.759551+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 13:07:03.718019+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientConnectionException: База данных уже закрыта (чтобы отключить автоматическое закрытие базы данных при останове JVM, добавьте ";DB_CLOSE_ON_EXIT=FALSE" в URL)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.jdbc.JdbcConnection.checkClosed(JdbcConnection.java:1423)
+	at org.h2.jdbc.JdbcStatement.checkClosed(JdbcStatement.java:1302)
+	at org.h2.jdbc.JdbcResultSet.checkClosed(JdbcResultSet.java:3539)
+	at org.h2.jdbc.JdbcResultSet.getMetaData(JdbcResultSet.java:141)
+	at com.zaxxer.hikari.pool.HikariProxyResultSet.getMetaData(HikariProxyResultSet.java)
+	at java.sql.rowset/com.sun.rowset.CachedRowSetImpl.populate(CachedRowSetImpl.java:649)
+	at org.springframework.jdbc.core.SqlRowSetResultSetExtractor.createSqlRowSet(SqlRowSetResultSetExtractor.java:75)
+	at org.springframework.jdbc.core.SqlRowSetResultSetExtractor.extractData(SqlRowSetResultSetExtractor.java:58)
+	at org.springframework.jdbc.core.SqlRowSetResultSetExtractor.extractData(SqlRowSetResultSetExtractor.java:42)
+	at org.springframework.jdbc.core.JdbcTemplate$1QueryStatementCallback.doInStatement(JdbcTemplate.java:464)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:393)
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:476)
+	at org.springframework.jdbc.core.JdbcTemplate.queryForRowSet(JdbcTemplate.java:541)
+	at com.practice.filmorate.storage.impl.GenreDbStorage.findAll(GenreDbStorage.java:23)
+	at com.practice.filmorate.service.FilmService.create(FilmService.java:38)
+	at com.practice.filmorate.controller.FilmController.addFilm(FilmController.java:22)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2025-01-11 13:07:03.743547+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientConnectionException: База данных уже закрыта (чтобы отключить автоматическое закрытие базы данных при останове JVM, добавьте ";DB_CLOSE_ON_EXIT=FALSE" в URL)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.jdbc.JdbcConnection.checkClosed(JdbcConnection.java:1423)
+	at org.h2.jdbc.JdbcConnection.clearWarnings(JdbcConnection.java:658)
+	at com.zaxxer.hikari.pool.ProxyConnection.close(ProxyConnection.java:258)
+	at org.springframework.jdbc.datasource.DataSourceUtils.doCloseConnection(DataSourceUtils.java:406)
+	at org.springframework.jdbc.datasource.DataSourceUtils.doReleaseConnection(DataSourceUtils.java:393)
+	at org.springframework.jdbc.datasource.DataSourceUtils.releaseConnection(DataSourceUtils.java:360)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:406)
+	at org.springframework.jdbc.core.JdbcTemplate.query(JdbcTemplate.java:476)
+	at org.springframework.jdbc.core.JdbcTemplate.queryForRowSet(JdbcTemplate.java:541)
+	at com.practice.filmorate.storage.impl.GenreDbStorage.findAll(GenreDbStorage.java:23)
+	at com.practice.filmorate.service.FilmService.create(FilmService.java:38)
+	at com.practice.filmorate.controller.FilmController.addFilm(FilmController.java:22)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+2025-01-11 13:09:24.711567+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 13:09:24.971446+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 21:14:58.219447+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 21:14:58.523992+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 21:15:00.053741+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 21:15:00.281877+05:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 21:15:00.499105+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 21:15:00.742157+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 21:30:02.250179+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 21:30:02.517974+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 22:07:14.355169+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 22:07:14.588488+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 22:08:47.181033+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 22:08:57.738126+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 22:23:31.327175+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"
+Syntax error in SQL statement "select * from films f where id = ?[*]join films_genres fg on f.id = fg.film_id"; SQL statement:
+select * from films f where id = ?join films_genres fg on f.id = fg.film_id [42000-232]
+2025-01-11 22:28:07.908170+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 22:32:47.500161+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 22:33:36.816769+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 22:33:37.030774+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 22:34:50.562658+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 22:34:50.813499+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 22:39:28.962931+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 22:39:29.271325+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 23:28:35.078532+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 23:28:35.354964+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 23:28:36.984602+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 23:28:37.204284+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 23:28:37.413844+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 23:28:37.664176+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 23:40:09.622676+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 23:40:09.901357+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 23:40:10.139980+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-11 23:40:10.366122+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-12 00:07:20.510399+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-12 00:07:20.779038+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-12 00:07:20.989070+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-12 00:07:21.216332+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]
+2025-01-12 00:12:32.385784+05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"
+Syntax error in SQL statement "select * from films f where id = ?\000a[*]join films_genres fg on f.id = fg.film_id\000a"; SQL statement:
+select * from films f where id = ?
+join films_genres fg on f.id = fg.film_id
+ [42000-232]

@@ -26,28 +26,24 @@ public class UserDbStorage implements UserStorage {
             String email = sqlRowSet.getString("email");
             String login = sqlRowSet.getString("login");
             String name = sqlRowSet.getString("name");
-            Date birthday = sqlRowSet.getDate("birthday");
+            LocalDate birthday = sqlRowSet.getDate("birthday").toLocalDate();
 
-            LocalDate theBirthday = LocalDate.of(birthday.getYear(), birthday.getMonth(), birthday.getDay());
-
-            users.add(new User(id, email, login, name, theBirthday));
+            users.add(new User(id, email, login, name, birthday));
         }
         return users;
     }
 
     @Override
     public Optional<User> findById(int id) {
-        String sql = "select * from mpa where id = ?";
+        String sql = "select * from users where id = ?";
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql, id);
         if (sqlRowSet.next()) {
             String email = sqlRowSet.getString("email");
             String login = sqlRowSet.getString("login");
             String name = sqlRowSet.getString("name");
-            Date birthday = sqlRowSet.getDate("birthday");
+            LocalDate birthday = sqlRowSet.getDate("birthday").toLocalDate();
 
-            LocalDate theBirthday = LocalDate.of(birthday.getYear(), birthday.getMonth(), birthday.getDay());
-
-            User user = new User(id, email, login, name, theBirthday);
+            User user = new User(id, email, login, name, birthday);
 
             return Optional.of(user);
         }
@@ -74,6 +70,10 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User update(User user) {
+        String sql = "update users set email = ?, login = ?, name = ?, birthday = ? where id = ?";
+
+        jdbcTemplate.update(sql, user.getEmail(), user.getLogin(), user.getName(), user.getBirthday(), user.getId());
+
         return user;
     }
 }

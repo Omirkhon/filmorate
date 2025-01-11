@@ -1,5 +1,6 @@
 package com.practice.filmorate.storage.impl;
 
+import com.practice.filmorate.exceptions.NotFoundException;
 import com.practice.filmorate.model.Mpa;
 import com.practice.filmorate.storage.MpaStorage;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,16 +35,19 @@ public class MpaDbStorage implements MpaStorage {
     }
 
     @Override
-    public Optional<Mpa> findById(int id) {
+    public Mpa findById(int id) {
         String sql = "select * from mpa where id = ?";
-        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql, id);
-        if (sqlRowSet.next()) {
-            String name = sqlRowSet.getString("name");
-            String description = sqlRowSet.getString("description");
+        return jdbcTemplate.query(sql, this::mapRow, id)
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Мпа не найден"));
+    }
 
-            Mpa mpa = new Mpa(id, name, description);
-            return Optional.of(mpa);
-        }
-        return Optional.empty();
+    public Mpa mapRow(ResultSet rs, int mapRow) throws SQLException {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String description = rs.getString("description");
+
+        return new Mpa(id, name, description);
     }
 }

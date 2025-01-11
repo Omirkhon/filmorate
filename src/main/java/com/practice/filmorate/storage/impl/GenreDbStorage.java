@@ -1,5 +1,6 @@
 package com.practice.filmorate.storage.impl;
 
+import com.practice.filmorate.exceptions.NotFoundException;
 import com.practice.filmorate.model.Genre;
 import com.practice.filmorate.storage.GenreStorage;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,15 +34,18 @@ public class GenreDbStorage implements GenreStorage {
     }
 
     @Override
-    public Optional<Genre> findById(int id) {
+    public Genre findById(int id) {
         String sql = "select * from genres where id = ?";
-        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql, id);
-        if (sqlRowSet.next()) {
-            String name = sqlRowSet.getString("name");
+        return jdbcTemplate.query(sql, this::mapRow, id)
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Жанр не найден."));
+    }
 
-            Genre genre = new Genre(id, name);
-            return Optional.of(genre);
-        }
-        return Optional.empty();
+    private Genre mapRow(ResultSet rs, int rowNum) throws SQLException {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+
+        return new Genre(id, name);
     }
 }
