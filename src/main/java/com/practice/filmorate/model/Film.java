@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
@@ -16,6 +17,7 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
+@AllArgsConstructor
 public class Film {
     int id;
     @NotBlank(message = "Название не может быть пустым.")
@@ -25,13 +27,10 @@ public class Film {
     LocalDate releaseDate;
     @Positive(message = "Некорректная продолжительность фильма.")
     int duration;
+    Mpa mpa;
+
+    final Set<Genre> genres = new HashSet<>();
     final Set<Integer> likes = new HashSet<>();
-    public Film(String name, String description, LocalDate releaseDate, int duration) {
-        this.name = name;
-        this.description = description;
-        this.releaseDate = releaseDate;
-        this.duration = duration;
-    }
 
     public void addLike(int userId) {
         this.likes.add(userId);
