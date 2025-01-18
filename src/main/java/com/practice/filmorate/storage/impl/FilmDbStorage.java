@@ -1,6 +1,5 @@
 package com.practice.filmorate.storage.impl;
 
-import com.practice.filmorate.exceptions.NotFoundException;
 import com.practice.filmorate.model.Film;
 import com.practice.filmorate.model.Genre;
 import com.practice.filmorate.model.Mpa;
@@ -41,7 +40,7 @@ public class FilmDbStorage implements FilmStorage {
 
             Mpa mpa = mpaStorage.findById(mpaID);
 
-            films.add(new Film(id, name, description, releaseDate, duration, mpa));
+            films.add(new Film(id, name, description, releaseDate, duration, mpa, new HashSet<>()));
         }
         return films;
     }
@@ -49,28 +48,49 @@ public class FilmDbStorage implements FilmStorage {
     @Override
     public Optional<Film> findById(int id) {
         String sql = """
-                select * from films f
-                join films_genres fg on f.id = fg.film_id
+                select f.ID            as film_id,
+                       f.NAME          as film_name,
+                       f.DESCRIPTION   as film_description,
+                       f.RELEASE_DATE  as film_release_date,
+                       f.DURATION      as film_duration,
+                       mpa.ID          as mpa_id,
+                       mpa.NAME        as mpa_name,
+                       mpa.DESCRIPTION as mpa_description,
+                       g.ID            as genre_id,
+                       g.NAME          as genre_name
+                from films f
+                         join mpa on f.mpa_id = mpa.id
+                         left join films_genres fg on f.id = fg.film_id
+                         left join genres g on g.id = fg.genre_id
                 where f.id = ?
                 """;
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql, id);
-        if (sqlRowSet.next()) {
-            String name = sqlRowSet.getString("name");
-            String description = sqlRowSet.getString("description");
-            LocalDate releaseDate = sqlRowSet.getDate("release_date").toLocalDate();
-            int duration = sqlRowSet.getInt("duration");
-            int mpaID = sqlRowSet.getInt("mpa_id");
-            int genreID = sqlRowSet.getInt("genre_id");
+        Film film = null;
+        while (sqlRowSet.next()) {
+            String name = sqlRowSet.getString("FILM_NAME");
+            String description = sqlRowSet.getString("FILM_DESCRIPTION");
+            LocalDate releaseDate = sqlRowSet.getDate("FILM_RELEASE_DATE").toLocalDate();
+            int duration = sqlRowSet.getInt("FILM_DURATION");
+            int mpaID = sqlRowSet.getInt("MPA_ID");
+            String mpaName = sqlRowSet.getString("MPA_NAME");
+            String mpaDescription = sqlRowSet.getString("MPA_DESCRIPTION");
+            Mpa mpa = new Mpa(mpaID, mpaName, mpaDescription);
+            int genreID = sqlRowSet.getInt("GENRE_ID"); // 0
 
-            Mpa mpa = mpaStorage.findById(mpaID);
-            Genre genre = genreStorage.findById(genreID);
+            if (genreID == 0) {
+                film = new Film(id, name, description, releaseDate, duration, mpa, new HashSet<>());
+                break;
+            }
 
-            Film film = new Film(id, name, description, releaseDate, duration, mpa);
+            String genreName = sqlRowSet.getString("GENRE_NAME");
+            Genre genre = new Genre(genreID, genreName);
+            if (film == null) {
+                film = new Film(id, name, description, releaseDate, duration, mpa, new HashSet<>());
+            }
+
             film.addGenre(genre);
-
-            return Optional.of(film);
         }
-        return Optional.empty();
+        return Optional.ofNullable(film);
     }
 
     @Override
@@ -89,6 +109,11 @@ public class FilmDbStorage implements FilmStorage {
         int id = insert.executeAndReturnKey(map).intValue();
         film.setId(id);
 
+        for (Genre genre : film.getGenres()) {
+            String sql = "insert into films_genres(film_id, genre_id) values(?, ?)";
+            jdbcTemplate.update(sql, id, genre.getId());
+        }
+
         return film;
     }
 
@@ -101,6 +126,26 @@ public class FilmDbStorage implements FilmStorage {
         return film;
     }
 
+    @Override
+    public void addLike(int filmId, int userId) {
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("likes");
+
+        Map<String, Object> map = Map.of(
+                "user_id", userId,
+                "film_id", filmId
+        );
+
+        insert.execute(map);
+    }
+
+    @Override
+    public void deleteLike(int filmId, int userId) {
+        String sql = "delete from likes where film_id = ? and user_id = ?";
+
+        jdbcTemplate.update(sql, filmId, userId);
+    }
+
     public Film mapRow(ResultSet rs, int rowNum) throws SQLException {
         int id = rs.getInt("id");
         String name = rs.getString("name");
@@ -111,6 +156,6 @@ public class FilmDbStorage implements FilmStorage {
 
         Mpa mpa = mpaStorage.findById(mpaID);
 
-        return new Film(id, name, description, releaseDate, duration, mpa);
+        return new Film(id, name, description, releaseDate, duration, mpa, new HashSet<>());
     }
 }

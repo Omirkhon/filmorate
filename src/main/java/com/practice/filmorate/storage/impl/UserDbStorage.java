@@ -76,4 +76,29 @@ public class UserDbStorage implements UserStorage {
 
         return user;
     }
+
+    @Override
+    public void addFriend(int userId, int friendId) {
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("user_friends");
+
+        Map<String, Object> map = Map.of(
+                "user_id", userId,
+                "friend_id", friendId
+        );
+
+        insert.execute(map);
+    }
+
+    @Override
+    public void deleteFriend(int userId, int friendId) {
+        String sql = "delete from user_friends where user_id = ? and friend_id = ?";
+
+        jdbcTemplate.update(sql, userId, friendId);
+    }
+
+    @Override
+    public List<User> findAllFriends(int userId) {
+        return new ArrayList<>();
+    }
 }

@@ -22,28 +22,30 @@ public class UserService {
     }
 
     public void addFriend(int userId, int friendId) {
-
         User user = findById(userId);
-        User friend = findById(friendId);
+
+        if (findById(friendId) == null) {
+            throw new NotFoundException("Друг не найден");
+        }
 
         user.addFriend(friendId);
-        friend.addFriend(userId);
+
+        userStorage.addFriend(userId, friendId);
     }
 
     public void deleteFriend(int userId, int friendId) {
-        User user = findById(userId);
-        User friend = findById(friendId);
+        findById(userId).deleteFriend(friendId);
+        if (findById(friendId) == null) {
+            throw new NotFoundException("Друг не найден");
+        }
 
-        user.deleteFriend(friendId);
-        friend.deleteFriend(userId);
+        userStorage.deleteFriend(userId, friendId);
     }
 
     public List<User> findAllFriends(int userId) {
         User user = findById(userId);
 
-        return user.getFriends().stream()
-                .map(this::findById)
-                .toList();
+        return userStorage.findAllFriends(userId);
     }
 
     public List<User> findAllCommonFriends(int userId, int friendId) {

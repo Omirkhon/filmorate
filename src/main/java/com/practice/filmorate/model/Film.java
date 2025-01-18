@@ -28,7 +28,7 @@ public class Film {
     int duration;
     Mpa mpa;
 
-    final Set<Genre> genres = new TreeSet<>();
+    Set<Genre> genres;
     final Set<Integer> likes = new HashSet<>();
 
     public void addLike(int userId) {

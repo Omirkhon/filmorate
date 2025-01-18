@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +33,9 @@ public class FilmService {
     }
 
     public Film create(Film film) {
+        if (film.getGenres() != null) {
+            film.setGenres(new TreeSet<>(film.getGenres()));
+        }
         validate(film);
         List<Genre> genres = genreStorage.findAll();
         for (Genre genre : film.getGenres()) {
@@ -49,17 +54,11 @@ public class FilmService {
     }
 
     public void addLike(int filmId, int userId) {
-        userStorage.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        Film film = findById(filmId);
-
-        film.addLike(userId);
+        filmStorage.addLike(filmId, userId);
     }
 
     public void deleteLike(int filmId, int userId) {
-        userStorage.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        Film film = findById(filmId);
-
-        film.deleteLike(userId);
+        filmStorage.deleteLike(filmId, userId);
     }
 
     public List<Film> findAllPopular(int count) {
