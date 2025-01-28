@@ -15,7 +15,9 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
+    @EqualsAndHashCode.Include
     int id;
     @Email (message = "Некорректный формат эл. почты.")
     String email;

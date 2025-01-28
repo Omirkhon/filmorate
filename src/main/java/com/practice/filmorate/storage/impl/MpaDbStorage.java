@@ -1,6 +1,5 @@
 package com.practice.filmorate.storage.impl;
 
-import com.practice.filmorate.exceptions.NotFoundException;
 import com.practice.filmorate.model.Mpa;
 import com.practice.filmorate.storage.MpaStorage;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +34,11 @@ public class MpaDbStorage implements MpaStorage {
     }
 
     @Override
-    public Mpa findById(int id) {
+    public Optional<Mpa> findById(int id) {
         String sql = "select * from mpa where id = ?";
         return jdbcTemplate.query(sql, this::mapRow, id)
                 .stream()
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException("Мпа не найден"));
+                .findFirst();
     }
 
     public Mpa mapRow(ResultSet rs, int mapRow) throws SQLException {

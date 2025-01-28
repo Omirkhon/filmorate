@@ -99,6 +99,21 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public List<User> findAllFriends(int userId) {
-        return new ArrayList<>();
+        List<User> friends = new ArrayList<>();
+        String sql = """
+        select * from USER_FRIENDS UF
+        join USERS U on UF.FRIEND_ID = U.ID
+        where USER_ID = ?""";
+        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql, userId);
+        while (sqlRowSet.next()) {
+            int id = sqlRowSet.getInt("id");
+            String email = sqlRowSet.getString("email");
+            String login = sqlRowSet.getString("login");
+            String name = sqlRowSet.getString("name");
+            LocalDate birthday = sqlRowSet.getDate("birthday").toLocalDate();
+
+            friends.add(new User(id, email, login, name, birthday));
+        }
+        return friends;
     }
 }

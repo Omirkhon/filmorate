@@ -7,20 +7,17 @@ import com.practice.filmorate.model.Genre;
 import com.practice.filmorate.storage.FilmStorage;
 import com.practice.filmorate.storage.GenreStorage;
 import com.practice.filmorate.storage.MpaStorage;
-import com.practice.filmorate.storage.UserStorage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
 
 @Service
 @RequiredArgsConstructor
 public class FilmService {
     private final FilmStorage filmStorage;
-    private final UserStorage userStorage;
     private final MpaStorage mpaStorage;
     private final GenreStorage genreStorage;
 
@@ -35,6 +32,8 @@ public class FilmService {
     public Film create(Film film) {
         if (film.getGenres() != null) {
             film.setGenres(new TreeSet<>(film.getGenres()));
+        }else {
+            film.setGenres(new TreeSet<>());
         }
         validate(film);
         List<Genre> genres = genreStorage.findAll();
@@ -62,14 +61,12 @@ public class FilmService {
     }
 
     public List<Film> findAllPopular(int count) {
-        return filmStorage.findAll()
-                .stream()
-                .sorted((film1, film2) -> film2.getNumOfLikes() - film1.getNumOfLikes())
-                .limit(count)
-                .toList();
+        return filmStorage.findPopular(count);
     }
 
     public void validate(Film film) {
+        mpaStorage.findById(film.getMpa().getId()).orElseThrow(() -> new ValidationException("Такого МПА не существует"));
+
         if (film.getReleaseDate().isBefore(LocalDate.parse("1895-12-28"))) {
             throw new ValidationException("Некорректная дата релиза.");
         }

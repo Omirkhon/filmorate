@@ -3,9 +3,8 @@ package com.practice.filmorate.storage.impl;
 import com.practice.filmorate.model.Film;
 import com.practice.filmorate.model.Genre;
 import com.practice.filmorate.model.Mpa;
+import com.practice.filmorate.service.MpaService;
 import com.practice.filmorate.storage.FilmStorage;
-import com.practice.filmorate.storage.GenreStorage;
-import com.practice.filmorate.storage.MpaStorage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -21,9 +20,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class FilmDbStorage implements FilmStorage {
     private final JdbcTemplate jdbcTemplate;
-    private final MpaStorage mpaStorage;
-    private final GenreStorage genreStorage;
-
+    private final MpaService mpaService;
 
     @Override
     public List<Film> findAll() {
@@ -38,7 +35,7 @@ public class FilmDbStorage implements FilmStorage {
             int duration = sqlRowSet.getInt("duration");
             int mpaID = sqlRowSet.getInt("mpa_id");
 
-            Mpa mpa = mpaStorage.findById(mpaID);
+            Mpa mpa = mpaService.findById(mpaID);
 
             films.add(new Film(id, name, description, releaseDate, duration, mpa, new HashSet<>()));
         }
@@ -146,6 +143,32 @@ public class FilmDbStorage implements FilmStorage {
         jdbcTemplate.update(sql, filmId, userId);
     }
 
+    @Override
+    public List<Film> findPopular(int count) {
+        List<Film> films = new ArrayList<>();
+        String sql = """
+        select f.* from films f
+        left join likes on f.id = likes.film_id
+        group by f.id
+        order by count(likes.film_id) desc
+        limit ?
+        """;
+        SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql, count);
+        while (sqlRowSet.next()) {
+            int id = sqlRowSet.getInt("id");
+            String name = sqlRowSet.getString("name");
+            String description = sqlRowSet.getString("description");
+            LocalDate releaseDate = sqlRowSet.getDate("release_date").toLocalDate();
+            int duration = sqlRowSet.getInt("duration");
+            int mpaID = sqlRowSet.getInt("mpa_id");
+
+            Mpa mpa = mpaService.findById(mpaID);
+
+            films.add(new Film(id, name, description, releaseDate, duration, mpa, new HashSet<>()));
+        }
+        return films;
+    }
+
     public Film mapRow(ResultSet rs, int rowNum) throws SQLException {
         int id = rs.getInt("id");
         String name = rs.getString("name");
@@ -154,7 +177,7 @@ public class FilmDbStorage implements FilmStorage {
         int duration = rs.getInt("duration");
         int mpaID = rs.getInt("mpa_id");
 
-        Mpa mpa = mpaStorage.findById(mpaID);
+        Mpa mpa = mpaService.findById(mpaID);
 
         return new Film(id, name, description, releaseDate, duration, mpa, new HashSet<>());
     }

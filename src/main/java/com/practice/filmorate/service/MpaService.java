@@ -1,5 +1,6 @@
 package com.practice.filmorate.service;
 
+import com.practice.filmorate.exceptions.NotFoundException;
 import com.practice.filmorate.model.Mpa;
 import com.practice.filmorate.storage.MpaStorage;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,6 @@ public class MpaService {
     }
 
     public Mpa findById(int id) {
-        return mpaStorage.findById(id);
+        return mpaStorage.findById(id).orElseThrow(() -> new NotFoundException("МПА не найден"));
     }
 }
