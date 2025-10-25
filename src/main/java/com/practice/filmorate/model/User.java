@@ -1,13 +1,9 @@
 package com.practice.filmorate.model;
 
-import com.practice.filmorate.exceptions.NotFoundException;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
@@ -18,7 +14,10 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
+    @EqualsAndHashCode.Include
     int id;
     @Email (message = "Некорректный формат эл. почты.")
     String email;
@@ -29,13 +28,6 @@ public class User {
     LocalDate birthday;
 
     final Set<Integer> friends = new HashSet<>();
-
-    public User(String email, String login, String name, LocalDate birthday) {
-        this.email = email;
-        this.login = login;
-        this.name = name;
-        this.birthday = birthday;
-    }
 
     public void addFriend(int friend) {
         this.friends.add(friend);

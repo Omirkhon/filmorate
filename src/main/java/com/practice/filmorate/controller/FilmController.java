@@ -2,7 +2,6 @@ package com.practice.filmorate.controller;
 
 import com.practice.filmorate.model.Film;
 import com.practice.filmorate.service.FilmService;
-import com.practice.filmorate.storage.FilmStorage;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

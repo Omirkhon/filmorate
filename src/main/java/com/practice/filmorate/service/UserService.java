@@ -22,37 +22,45 @@ public class UserService {
     }
 
     public void addFriend(int userId, int friendId) {
-
         User user = findById(userId);
-        User friend = findById(friendId);
+
+        if (findById(friendId) == null) {
+            throw new NotFoundException("Друг не найден");
+        }
 
         user.addFriend(friendId);
-        friend.addFriend(userId);
+
+        userStorage.addFriend(userId, friendId);
     }
 
     public void deleteFriend(int userId, int friendId) {
         User user = findById(userId);
-        User friend = findById(friendId);
+
+        if (findById(friendId) == null) {
+            throw new NotFoundException("Друг не найден");
+        }
 
         user.deleteFriend(friendId);
-        friend.deleteFriend(userId);
+
+        userStorage.deleteFriend(userId, friendId);
     }
 
     public List<User> findAllFriends(int userId) {
-        User user = findById(userId);
-
-        return user.getFriends().stream()
-                .map(this::findById)
-                .toList();
+        if (findById(userId) == null) {
+            throw new NotFoundException("Пользователь не найден");
+        }
+        return userStorage.findAllFriends(userId);
     }
 
     public List<User> findAllCommonFriends(int userId, int friendId) {
-        User user = findById(userId);
-        User friend = findById(friendId);
+        findById(userId);
+        findById(friendId);
 
-        return user.getFriends().stream()
-                .filter(i -> friend.getFriends().contains(i))
-                .map(this::findById)
+        List<User> first = userStorage.findAllFriends(userId);
+        List<User> second = userStorage.findAllFriends(friendId);
+
+        return first.stream()
+                .filter(second::contains)
                 .toList();
     }
 

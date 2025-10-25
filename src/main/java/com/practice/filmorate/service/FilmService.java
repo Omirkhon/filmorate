@@ -3,26 +3,26 @@ package com.practice.filmorate.service;
 import com.practice.filmorate.exceptions.NotFoundException;
 import com.practice.filmorate.exceptions.ValidationException;
 import com.practice.filmorate.model.Film;
-import com.practice.filmorate.model.User;
+import com.practice.filmorate.model.Genre;
 import com.practice.filmorate.storage.FilmStorage;
-import com.practice.filmorate.storage.UserStorage;
-import jakarta.validation.Valid;
+import com.practice.filmorate.storage.GenreStorage;
+import com.practice.filmorate.storage.MpaStorage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 @Service
 @RequiredArgsConstructor
 public class FilmService {
     private final FilmStorage filmStorage;
-    private final UserStorage userStorage;
+    private final MpaStorage mpaStorage;
+    private final GenreStorage genreStorage;
 
     public Film findById(int id) {
-        return filmStorage.findById(id).orElseThrow(() -> new NotFoundException("Фильм не найден"));
+        return filmStorage.findById(id).orElseThrow(() -> new NotFoundException("Фильм не найден."));
     }
 
     public List<Film> findAll() {
@@ -30,7 +30,19 @@ public class FilmService {
     }
 
     public Film create(Film film) {
+        if (film.getGenres() != null) {
+            film.setGenres(new TreeSet<>(film.getGenres()));
+        }else {
+            film.setGenres(new TreeSet<>());
+        }
         validate(film);
+        List<Genre> genres = genreStorage.findAll();
+        for (Genre genre : film.getGenres()) {
+            if (!genres.contains(genre)) {
+                throw new ValidationException("Такого жанра нет");
+            }
+        }
+        mpaStorage.findById(film.getMpa().getId());
         return filmStorage.create(film);
     }
 
@@ -41,29 +53,20 @@ public class FilmService {
     }
 
     public void addLike(int filmId, int userId) {
-        userStorage.findById(userId).orElseThrow(() -> new NotFoundException("Пользоветель не найден"));
-        Film film = findById(filmId);
-
-        film.addLike(userId);
+        filmStorage.addLike(filmId, userId);
     }
 
     public void deleteLike(int filmId, int userId) {
-        userStorage.findById(userId).orElseThrow(() -> new NotFoundException("Пользоветель не найден"));
-        Film film = findById(filmId);
-
-        film.deleteLike(userId);
+        filmStorage.deleteLike(filmId, userId);
     }
 
     public List<Film> findAllPopular(int count) {
-        return filmStorage.getFilms()
-                .values()
-                .stream()
-                .sorted((film1, film2) -> film2.getNumOfLikes() - film1.getNumOfLikes())
-                .limit(count)
-                .toList();
+        return filmStorage.findPopular(count);
     }
 
-    public void validate(@Valid @RequestBody Film film) {
+    public void validate(Film film) {
+        mpaStorage.findById(film.getMpa().getId()).orElseThrow(() -> new ValidationException("Такого МПА не существует"));
+
         if (film.getReleaseDate().isBefore(LocalDate.parse("1895-12-28"))) {
             throw new ValidationException("Некорректная дата релиза.");
         }
